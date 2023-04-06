@@ -16,6 +16,7 @@ class StreetWorld:
         #Manta/Car
         self.manta_handle = self.sim.getObject('/Manta')
         self.manta_script = self.sim.getScript(self.sim.scripttype_childscript, self.manta_handle)
+        self.client.step()
         self.current_state = []
     
     def step(self, action):
@@ -36,7 +37,7 @@ class StreetWorld:
         # return the MDP state
         mdp_state = self.agent_state
         self.current_state = mdp_state
-        return mdp_state
+        return [mdp_state]
     
     def state_label(self, state):
         #check if in goal
