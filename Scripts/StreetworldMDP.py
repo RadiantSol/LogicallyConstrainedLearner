@@ -10,7 +10,6 @@ class StreetWorld:
         self.client.step()
         track_manager = self.sim.getObject('/TrackManager')
         track_script = self.sim.getScript(self.sim.scripttype_childscript, track_manager, '/TrackManager')
-        track_type = 0
         result = self.sim.callScriptFunction('generateTrack', track_script)
         self.swmap, self.scaler = result
         self.current_state = []
