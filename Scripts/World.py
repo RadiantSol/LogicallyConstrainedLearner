@@ -1,3 +1,4 @@
+import math
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
@@ -9,11 +10,6 @@ class World:
         self.sim = sim
         self.map = None
         self.scaler = MinMaxScaler((-5, 5))
-
-    def get_swmap(self):
-        return self.map
-    def get_scaler(self):
-        return self.scaler
  
     def generateTrack(self, trackNo):
         map = np.array([[' ' for _ in range(50)] for _ in range(50)])
@@ -49,11 +45,8 @@ class World:
         self.placeGoal(goal[0])
         self.placeWalls(walls)
         self.sim.setObjectPosition(self.sim.getObject('/Manta'), -1, [car[0][0], car[0][1], 1])
-        
-        self.map = map
-        scaler = self.scaler
-        return [map, scaler]
-        
+        pass
+
     def placeWalls(self, obs):
         shapeHandles = []
         for a, b in obs:
@@ -68,15 +61,3 @@ class World:
         self.sim.setObjectPosition(goal, -1, [g[0], g[1], 1])
         self.sim.setShapeColor(goal, None, self.sim.colorcomponent_ambient, [0, 1, 0])
         self.sim.setObjectAlias(goal, 'Goal')
-        
-        # observation[0] = car coordinates in 3D vector
-        # observation[1] = car velocity
-    def get_observation(self):
-        observation = []
-        car = self.sim.getObject('/Manta')
-        # get position of car
-        carpos = self.sim.getObjectPosition(car, -1)
-        observation.append(carpos)
-        # get velocity of car
-        observation.append(self.sim.callScriptFunction('getSpeed', self.sim.getScript(self.sim.scripttype_childscript, car)))
-        return observation
