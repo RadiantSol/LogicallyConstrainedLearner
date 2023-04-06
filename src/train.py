@@ -1,10 +1,10 @@
 import os
 import random
 import numpy as np
-from src.environments.SlipperyGrid import SlipperyGrid
+
 from src.automata.ldba import LDBA
 from src.core.lcrl_core import LCRL
-from src.animator.animator import animate
+#from src.animator.animator import animate
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib import colors
