@@ -8,10 +8,18 @@ class StreetWorld:
         self.sim = self.client.getObject('sim')
         self.sim.startSimulation()
         self.client.step()
-        self.track_manager = self.sim.getObject('/TrackManager')
-        self.track_script = self.sim.getScript(self.sim.scripttype_childscript, self.track_manager, '/TrackManager')
-        result = self.sim.callScriptFunction('generateTrack', self.track_script)
-        self.swmap, self.scaler = result
+
+        #TrackManager
+        self.track_manager_handle = self.sim.getObject('/TrackManager')
+        self.track_script = self.sim.getScript(self.sim.scripttype_childscript, self.track_manager_handle, '/TrackManager')
+
+        #Manta
+        self.manta_handle = self.sim.getObject('/Manta')
+        self.manta_script = self.sim.getScript(self.sim.scripttype_childscript, self.manta_handle)
+
+        #result = self.sim.callScriptFunction('generateTrack', self.track_script)
+        self.swmap = self.sim.callScriptFunction('get_swmap', self.track_script)
+        self.scaler = self.sim.callScriptFunction('get_scaler', self.track_script)
         self.current_state = []
     
     def step(self, action):
@@ -19,13 +27,13 @@ class StreetWorld:
         # allow us to control the manta remotely
         # *** UNTESTED ***
         if action == 'accelerate':
-            self.sim.callScriptFunction('controlVehicle', self.sim.getScript(self.sim.scripttype_childscript, self.sim.getObject('Manta')), 1, 0)
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 0)
         elif action == 'decelerate':
-            self.sim.callScriptFunction('controlVehicle', self.sim.getScript(self.sim.scripttype_childscript, self.sim.getObject('Manta')), 0, 0)
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 0)
         self.client.step()
 
         # evaluate result of step
-        observation = self.sim.callScriptFunction('get_observation', self.sim.getScript(self.sim.scripttype_childscript, self.sim.getObject('Streetworld')))
+        observation = self.sim.callScriptFunction('get_observation', self.track_script)
         # reversing scaled values using given scaler
         coords = self.scaler.inverse_transform([observation[0][0], observation[0][1]])
         # round to 0 decimal places just in case
@@ -39,7 +47,6 @@ class StreetWorld:
         dist = abs(center - coords[1])
         self.current_state = self.current_state + [dist, math.round(observation[1])]
         return self.current_state
-
     
     def state_label(state):
         goal = False
@@ -52,9 +59,6 @@ class StreetWorld:
             offroad = 1
         return [goal, offroad]
             
-
-
-
     def reset(self):
         self.sim.stopSimulation()
         self.sim.startSimulation()
