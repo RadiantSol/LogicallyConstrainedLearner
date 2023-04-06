@@ -20,22 +20,31 @@ class Observation:
         vec.append(int(self.velocity))
         return vec
 
-def get_observation(sim):
+    def check_goal(sim):
         car = sim.getObject('/Manta')
         goal = sim.getObject('/Goal')
-        # get position of car
         x, y, z = sim.getObjectPosition(car, goal)
+        if (x < 1) and (y < 1):
+            return True
+        else:
+            return False
 
-        dx = 1/10
-        dy = 1/10
-        
-        #TO-DO get yaw from Quaternion
-        x,y,z,w =sim.getObjectQuaternion(car, goal)
-        yaw = atan2(2.0*(w * z + x * y), (w * w + x * x - y * y - z * z))
-        dt = 1/(2*pi)
-        
-        # get velocity of car
-        car_script = sim.getScript(sim.scripttype_childscript, car)
-        velocity = sim.callScriptFunction('getSpeed', car_script)
-        obs = Observation(x,y,z,yaw,dx,dy,dt,velocity)
-        return 1
+    def get_observation(sim):
+            car = sim.getObject('/Manta')
+            goal = sim.getObject('/Goal')
+            # get position of car
+            x, y, z = sim.getObjectPosition(car, goal)
+
+            dx = 1/10
+            dy = 1/10
+            
+            #TO-DO get yaw from Quaternion
+            x,y,z,w =sim.getObjectQuaternion(car, goal)
+            yaw = atan2(2.0*(w * z + x * y), (w * w + x * x - y * y - z * z))
+            dt = 1/(2*pi)
+            
+            # get velocity of car
+            car_script = sim.getScript(sim.scripttype_childscript, car)
+            velocity = sim.callScriptFunction('getSpeed', car_script)
+            obs = Observation(x,y,z,yaw,dx,dy,dt,velocity)
+            return 1
