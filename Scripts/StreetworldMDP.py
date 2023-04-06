@@ -1,4 +1,5 @@
 import math
+import time
 from Scripts.Obs import Observation
 
 # MDP representation from LCRL
@@ -26,8 +27,9 @@ class StreetWorld:
         elif action == 'decelerate':
             self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 0)
         
-        # execute action
-        self.client.step()
+        # execute action for 10 steps
+        for _ in range(10):
+            self.client.step()
 
         # check for obstacles
 
@@ -44,8 +46,15 @@ class StreetWorld:
         if Observation.check_goal(self.sim):
             return ["goal"]
         else:
-            return ["road"]
+            if Observation.check_off_map(self.sim):
+                return["off"]
+            else:
+                return ["road"]
             
     def reset(self):
         self.sim.stopSimulation()
+        time.sleep(1)
         self.sim.startSimulation()
+        self.client.step()
+        self.agent_state = Observation.get_observation(self.sim)
+        self.current_state = [self.agent_state]

@@ -24,7 +24,17 @@ class Observation:
         car = sim.getObject('/Manta')
         goal = sim.getObject('/Goal')
         x, y, z = sim.getObjectPosition(car, goal)
-        if (x < 1) and (y < 1):
+        print( "x ="+str(x)+" and y="+str(y) )
+        if (x < 3) and (y < 3):
+            return True
+        else:
+            return False
+    
+    def check_off_map(sim):
+        car = sim.getObject('/Manta')
+        goal = sim.getObject('/Goal')
+        x, y, z = sim.getObjectPosition(car, sim.handle_world)
+        if z > 5:
             return True
         else:
             return False
@@ -47,4 +57,5 @@ class Observation:
             car_script = sim.getScript(sim.scripttype_childscript, car)
             velocity = sim.callScriptFunction('getSpeed', car_script)
             obs = Observation(x,y,z,yaw,dx,dy,dt,velocity)
-            return 1
+            vect = obs.get_vector()
+            return vect
