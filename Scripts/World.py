@@ -4,14 +4,20 @@ from sklearn.preprocessing import MinMaxScaler
 # generate the chosen track for the learner to train on
 # here be curriculum learning
 
-class World():
+class World:
     def __init__(self, sim):
         self.sim = sim
+        self.map = None
+        self.scaler = MinMaxScaler((-5, 5))
+
+    def get_swmap(self):
+        return self.map
+    def get_scaler(self):
+        return self.scaler
  
     def generateTrack(self, trackNo):
         map = np.array([[' ' for _ in range(50)] for _ in range(50)])
         walls = []
-        scaler = MinMaxScaler((-5, 5))
         
         # straight line track, no traffic light
         if trackNo == 0:
@@ -37,13 +43,15 @@ class World():
         # curvy track, traffic light
         elif trackNo == 2:
             pass
-        walls = scaler.fit_transform(walls)
-        goal = scaler.transform([goal])
-        car = scaler.transform([car])
+        walls = self.scaler.fit_transform(walls)
+        goal = self.scaler.transform([goal])
+        car = self.scaler.transform([car])
         self.placeGoal(goal[0])
         self.placeWalls(walls)
         self.sim.setObjectPosition(self.sim.getObject('/Manta'), -1, [car[0][0], car[0][1], 1])
         
+        self.map = map
+        scaler = self.scaler
         return [map, scaler]
         
     def placeWalls(self, obs):
