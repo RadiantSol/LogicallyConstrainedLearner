@@ -1,5 +1,5 @@
 import math
-from Obs import Observation
+from Scripts.Obs import Observation
 
 # MDP representation from LCRL
 class StreetWorld:
