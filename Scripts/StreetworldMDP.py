@@ -1,4 +1,5 @@
 import math
+from Obs import Observation
 
 # MDP representation from LCRL
 class StreetWorld:
@@ -7,19 +8,12 @@ class StreetWorld:
         self.client.setStepping(True)
         self.sim = self.client.getObject('sim')
         self.sim.startSimulation()
-        self.client.step()
-
-        #TrackManager
-        self.track_manager_handle = self.sim.getObject('/TrackManager')
-        self.track_script = self.sim.getScript(self.sim.scripttype_childscript, self.track_manager_handle, '/TrackManager')
 
         #Manta
         self.manta_handle = self.sim.getObject('/Manta')
         self.manta_script = self.sim.getScript(self.sim.scripttype_childscript, self.manta_handle)
 
-        #result = self.sim.callScriptFunction('generateTrack', self.track_script)
-        self.swmap = self.sim.callScriptFunction('get_swmap', self.track_script)
-        self.scaler = self.sim.callScriptFunction('get_scaler', self.track_script)
+
         self.current_state = []
     
     def step(self, action):
