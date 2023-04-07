@@ -45,7 +45,6 @@ class World:
         self.placeGoal(goal[0])
         self.placeWalls(walls)
         self.sim.setObjectPosition(self.sim.getObject('/Manta'), -1, [car[0][0], car[0][1], 1])
-        pass
 
     def placeWalls(self, obs):
         shapeHandles = []

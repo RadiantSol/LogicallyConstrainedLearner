@@ -1,6 +1,7 @@
 import math
 import time
 from Scripts.Obs import Observation
+from config import STEP_LENGTH
 
 # MDP representation from LCRL
 class StreetWorld:
@@ -20,6 +21,9 @@ class StreetWorld:
         self.client.step()
         self.current_state = []
     
+    # 10 total actions
+    # accelerate/decelerate 1 m/s^2
+    # set steering angle to -30/-15/0/15/30
     def step(self, action):
         # process action
         if action == 'accelerate':
@@ -27,8 +31,8 @@ class StreetWorld:
         elif action == 'decelerate':
             self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 0)
         
-        # execute action for 10 steps
-        for _ in range(10):
+        # execute action and take steps
+        for _ in range(STEP_LENGTH):
             self.client.step()
 
         # check for obstacles

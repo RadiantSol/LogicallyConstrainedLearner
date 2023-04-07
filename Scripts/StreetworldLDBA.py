@@ -2,7 +2,7 @@ from src.automata.ldba import LDBA
 
 StreetworldLDBA = LDBA(accepting_sets=[[1]])
 
-def step(self, label):
+def step(self, label) -> int:
     # state 0
     if self.automaton_state == 0:
         if 'goal' in label:
