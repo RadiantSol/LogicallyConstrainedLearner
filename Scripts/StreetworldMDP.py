@@ -24,6 +24,7 @@ class StreetWorld:
     # 10 total actions
     # accelerate/decelerate 1 m/s^2
     # set steering angle to -30/-15/0/15/30
+    # controlVehicle(acceleration, steering angle)
     def step(self, action):
         # process action
         if action == 'accelerate':
