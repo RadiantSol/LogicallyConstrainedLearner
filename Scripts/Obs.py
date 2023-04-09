@@ -24,7 +24,7 @@ class Observation:
         goal = sim.getObject('/Goal')
         x, y, z = sim.getObjectPosition(car, goal)
         print( f"x = {x} y = {y}")
-        if (x < 3) and (y < 3):
+        if (abs(x) < 3) and (abs(y) < 3):
             return True
         else:
             return False

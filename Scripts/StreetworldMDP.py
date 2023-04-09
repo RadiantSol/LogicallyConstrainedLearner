@@ -7,8 +7,16 @@ from config import STEP_LENGTH
 class StreetWorld:
     def __init__(self, client):
         self.action_space = [
-            "accelerate",
-            "decelerate"
+            "accelerate0",
+            "accelerate1",
+            "accelerate2",
+            "accelerate3",
+            "accelerate4",
+            "decelerate0",
+            "decelerate1",
+            "decelerate2",
+            "decelerate3",
+            "decelerate4",
         ]
         self.client = client
         self.client.setStepping(True)
@@ -27,10 +35,26 @@ class StreetWorld:
     # controlVehicle(acceleration, steering angle)
     def step(self, action):
         # process action
-        if action == 'accelerate':
+        if action == 'accelerate0':
             self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 0)
-        elif action == 'decelerate':
+        elif action == 'decelerate0':
             self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 0)
+        elif action == 'accelerate1':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 1)
+        elif action == 'decelerate1':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 1)
+        elif action == 'accelerate2':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 2)
+        elif action == 'decelerate2':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 2)
+        elif action == 'accelerate3':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 3)
+        elif action == 'decelerate3':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 3)
+        elif action == 'accelerate4':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 4)
+        elif action == 'decelerate4':
+            self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 4)
         
         # execute action and take steps
         for _ in range(STEP_LENGTH):
