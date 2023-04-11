@@ -13,10 +13,10 @@ if __name__ == "__main__":
 
 # train the agent
 task = train(MDP, LDBA,
-                     algorithm='ql',
-                     episode_num=25000,
+                     algorithm='nfq',
+                     episode_num=500,
                      iteration_num_max=4000,
-                     discount_factor=0.95,
+                     discount_factor=0.80,
                      learning_rate=0.9
                      )
 

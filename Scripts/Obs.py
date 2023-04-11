@@ -1,6 +1,6 @@
 from math import atan2, pi
 class Observation:
-    def __init__(self, x, y, z, theta, delta_x, delta_y, delta_theta, velocity) -> None:
+    def __init__(self, x, y, z, theta, delta_x, delta_y, delta_theta, velocity):
         self.x = x
         self.y = y
         self.z = z
@@ -9,7 +9,6 @@ class Observation:
         self.dy = delta_y
         self.dt = delta_theta
         self.velocity = velocity
-        pass
 
     def get_vector(self) -> list:
         vec = list()
@@ -20,30 +19,31 @@ class Observation:
         vec.append(int(self.velocity))
         return vec
 
-    def check_goal(sim):
+    def check_goal(sim) -> bool:
         car = sim.getObject('/Manta')
         goal = sim.getObject('/Goal')
         x, y, z = sim.getObjectPosition(car, goal)
-        print( "x ="+str(x)+" and y="+str(y) )
-        if (x < 3) and (y < 3):
+        #print( f"x = {x} y = {y}")
+        if (abs(x) < 3) and (abs(y) < 3):
+            print("goal")
             return True
         else:
             return False
     
-    def check_off_map(sim):
+    def check_off_map(sim) -> bool:
         car = sim.getObject('/Manta')
-        goal = sim.getObject('/Goal')
-        x, y, z = sim.getObjectPosition(car, sim.handle_world)
-        if z > 5:
+        x, y, _ = sim.getObjectPosition(car, sim.handle_world)
+        if y < -5 or y > 5 or x < -5 or x > 5:
+            print("off")
             return True
         else:
             return False
 
-    def get_observation(sim):
+    def get_observation(sim) -> list:
             car = sim.getObject('/Manta')
             goal = sim.getObject('/Goal')
             # get position of car
-            x, y, z = sim.getObjectPosition(car, goal)
+            carx, cary, carz = sim.getObjectPosition(car, goal)
 
             dx = 1/10
             dy = 1/10
@@ -56,6 +56,6 @@ class Observation:
             # get velocity of car
             car_script = sim.getScript(sim.scripttype_childscript, car)
             velocity = sim.callScriptFunction('getSpeed', car_script)
-            obs = Observation(x,y,z,yaw,dx,dy,dt,velocity)
+            obs = Observation(carx,cary,carz,yaw,dx,dy,dt,velocity)
             vect = obs.get_vector()
             return vect
