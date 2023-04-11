@@ -45,9 +45,9 @@ class Observation:
             # get position of car
             carx, cary, carz = sim.getObjectPosition(car, goal)
 
-            dx = 1/10
-            dy = 1/10
-            
+            dx = 1/5
+            dy = 1/5
+                        
             #TO-DO get yaw from Quaternion
             x,y,z,w =sim.getObjectQuaternion(car, goal)
             yaw = atan2(2.0*(w * z + x * y), (w * w + x * x - y * y - z * z))
