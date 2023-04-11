@@ -12,11 +12,11 @@ class StreetWorld:
             "accelerate2",
             "accelerate3",
             "accelerate4",
-            "decelerate0",
-            "decelerate1",
-            "decelerate2",
-            "decelerate3",
-            "decelerate4",
+            #"decelerate0",
+            #"decelerate1",
+            #"decelerate2",
+            #"decelerate3",
+            #"decelerate4",
         ]
         self.client = client
         self.client.setStepping(True)
@@ -84,6 +84,7 @@ class StreetWorld:
         self.sim.stopSimulation()
         time.sleep(1)
         self.sim.startSimulation()
+        self.sim.setBoolParam(self.sim.boolparam_display_enabled, False)
         self.client.step()
         self.agent_state = Observation.get_observation(self.sim)
         self.current_state = [self.agent_state]

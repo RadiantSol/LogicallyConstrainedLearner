@@ -17,14 +17,16 @@ class Observation:
         vec.append(int(self.z ))
         vec.append(int(self.theta / self.dt))
         vec.append(int(self.velocity))
+        print(vec)
         return vec
 
     def check_goal(sim) -> bool:
         car = sim.getObject('/Manta')
         goal = sim.getObject('/Goal')
         x, y, z = sim.getObjectPosition(car, goal)
-        print( f"x = {x} y = {y}")
+        #print( f"x = {x} y = {y}")
         if (abs(x) < 3) and (abs(y) < 3):
+            print("goal")
             return True
         else:
             return False
@@ -33,6 +35,7 @@ class Observation:
         car = sim.getObject('/Manta')
         x, y, _ = sim.getObjectPosition(car, sim.handle_world)
         if y < -5 or y > 5 or x < -5 or x > 5:
+            print("off")
             return True
         else:
             return False
@@ -43,9 +46,9 @@ class Observation:
             # get position of car
             carx, cary, carz = sim.getObjectPosition(car, goal)
 
-            dx = 1/10
-            dy = 1/10
-            
+            dx = 1/5
+            dy = 1/5
+                        
             #TO-DO get yaw from Quaternion
             x,y,z,w =sim.getObjectQuaternion(car, goal)
             yaw = atan2(2.0*(w * z + x * y), (w * w + x * x - y * y - z * z))
