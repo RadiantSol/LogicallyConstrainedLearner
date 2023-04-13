@@ -1,7 +1,7 @@
 import math
 import time
 from Scripts.Obs import Observation
-from config import STEP_LENGTH
+from config import STEP_LENGTH, DISPLAY_DISABLED
 
 # MDP representation from LCRL
 class StreetWorld:
@@ -84,7 +84,8 @@ class StreetWorld:
         self.sim.stopSimulation()
         time.sleep(1)
         self.sim.startSimulation()
-        self.sim.setBoolParam(self.sim.boolparam_display_enabled, False)
+        if DISPLAY_DISABLED:
+            self.sim.setBoolParam(self.sim.boolparam_display_enabled, False)
         self.client.step()
         self.agent_state = Observation.get_observation(self.sim)
         self.current_state = [self.agent_state]
