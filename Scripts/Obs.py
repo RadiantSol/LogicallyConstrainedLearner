@@ -17,7 +17,6 @@ class Observation:
         vec.append(int(self.z ))
         vec.append(int(self.theta / self.dt))
         vec.append(int(self.velocity))
-        print(vec)
         return vec
 
     def check_goal(sim) -> bool:
