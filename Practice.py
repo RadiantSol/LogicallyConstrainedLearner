@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
 # train the agent
 task = train(MDP, LDBA,
-                     algorithm='ql',
+                     algorithm=AL_CHOICE,
                      episode_num=EPISODES,
                      iteration_num_max=ITERATIONS,
                      discount_factor=DISCOUNT,
