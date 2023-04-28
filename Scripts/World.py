@@ -50,7 +50,7 @@ class World:
         shapeHandles = []
         for a, b in obs:
             shapeHandle = self.sim.createPrimitiveShape(self.sim.primitiveshape_cuboid, [0.25, 0.25, 1])
-            self.sim.setObjectPosition(shapeHandle, -1, [a, b, 1])
+            self.sim.setObjectPosition(shapeHandle, -1, [a, b, 0])
             shapeHandles.append(shapeHandle)
         groupHandle=self.sim.groupShapes(shapeHandles, True)
         self.sim.setObjectAlias(groupHandle, 'Obstacle')
