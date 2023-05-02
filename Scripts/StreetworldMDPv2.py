@@ -25,31 +25,29 @@ class StreetWorld:
         #Pioneer/Car
         self.car_handle = self.sim.getObject('/PioneerP3DX')
         self.car_script = self.sim.getScript(self.sim.scripttype_childscript, self.car_handle)
-        self.target_handle = self.sim.getObject('/TargetHandler')
-        self.target_script = self.sim.getScript(self.sim.scripttype_childscript, self.target_handle)
         self.client.step()
         self.current_state = []
     
     def step(self, action):
         # process action
         if action == "north":
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 0)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 0)
         elif action == 'north_east':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 1)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 1)
         elif action == 'east':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 2)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 2)
         elif action == 'south_east':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 3)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 3)
         elif action == 'south':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 4)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 4)
         elif action == 'south_west':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 5)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 5)
         elif action == 'west':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 6)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 6)
         elif action == 'north_west':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 7)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 7)
         elif action == 'stay':
-            self.sim.callScriptFunction('controlVehicle', self.target_script, 8)
+            self.sim.callScriptFunction('controlVehicle', self.car_script, 8)
         
         # execute action and take steps
         for _ in range(STEP_LENGTH):
