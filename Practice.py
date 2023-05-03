@@ -2,7 +2,7 @@
 from src.train import train
 from Scripts.StreetworldLDBA import StreetworldLDBA
 from zmqRemoteApi import RemoteAPIClient
-from Scripts.StreetworldMDP import StreetWorld
+from Scripts.StreetworldMDPv2 import StreetWorld
 from config import *
 
 if __name__ == "__main__":

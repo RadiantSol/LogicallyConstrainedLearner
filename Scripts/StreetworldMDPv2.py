@@ -1,6 +1,6 @@
 import math
 import time
-from Scripts.Obs import Observation
+from Scripts.ObsPioneer import Observation
 from config import STEP_LENGTH, DISPLAY_DISABLED
 
 # MDP representation from LCRL
