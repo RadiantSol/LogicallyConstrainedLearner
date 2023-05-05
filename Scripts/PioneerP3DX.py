@@ -14,11 +14,12 @@ def uni_to_diff(v, w):
 
 def non_sync(sim):
     # e.g. non-synchronized loop:
-    sim.setThreadAutomaticSwitch(False)
+    sim.setThreadAutomaticSwitch(True)
     motorLeft=sim.getObject("./leftMotor")
     motorRight=sim.getObject("./rightMotor")
-    goal = sim.getObject("./Target")
+    #goal = sim.getObject("/Target")
     robot = sim.getObject(".")
+    goal = sim.getObject("./Target")
     sim.setObjectParent(goal,-1,True)
     
     obstacles=sim.createCollection(0)

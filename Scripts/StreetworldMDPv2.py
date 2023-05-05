@@ -1,6 +1,7 @@
 import math
 import time
 from Scripts.ObsPioneer import Observation
+from Scripts.TargetHandler import move_target
 from config import STEP_LENGTH, DISPLAY_DISABLED
 
 # MDP representation from LCRL
@@ -30,24 +31,25 @@ class StreetWorld:
     
     def step(self, action):
         # process action
+        target_handle = self.sim.getObject('/Target')
         if action == "north":
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 0)
+            move_target(self.sim,0,self.car_handle,target_handle)
         elif action == 'north_east':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 1)
+            move_target(self.sim,1,self.car_handle,target_handle)
         elif action == 'east':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 2)
+            move_target(self.sim,2,self.car_handle,target_handle)
         elif action == 'south_east':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 3)
+            move_target(self.sim,3,self.car_handle,target_handle)
         elif action == 'south':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 4)
+            move_target(self.sim,4,self.car_handle,target_handle)
         elif action == 'south_west':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 5)
+            move_target(self.sim,5,self.car_handle,target_handle)
         elif action == 'west':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 6)
+            move_target(self.sim,6,self.car_handle,target_handle)
         elif action == 'north_west':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 7)
+            move_target(self.sim,7,self.car_handle,target_handle)
         elif action == 'stay':
-            self.sim.callScriptFunction('controlVehicle', self.car_script, 8)
+            move_target(self.sim,8,self.car_handle,target_handle)
         
         # execute action and take steps
         for _ in range(STEP_LENGTH):
