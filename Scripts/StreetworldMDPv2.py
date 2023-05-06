@@ -62,6 +62,7 @@ class StreetWorld:
 
         # return the MDP state
         mdp_state = self.agent_state
+        print(mdp_state)
         self.current_state = mdp_state
         return [mdp_state]
     
@@ -79,6 +80,8 @@ class StreetWorld:
         self.sim.stopSimulation()
         time.sleep(1)
         self.sim.startSimulation()
+        self.sim.setShapeColor(self.sim.getObject('/Light'), None, self.sim.colorcomponent_ambient, [1, 0, 0])
+        self.sim.setStringSignal("TrafficLight", "red")
         if DISPLAY_DISABLED:
             self.sim.setBoolParam(self.sim.boolparam_display_enabled, False)
         self.client.step()

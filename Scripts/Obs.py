@@ -42,6 +42,8 @@ class Observation:
     def get_observation(sim) -> list:
             car = sim.getObject('/Manta')
             goal = sim.getObject('/Goal')
+            light = sim.getStringSignal('TrafficLight')
+            sim.clearStringSignal('TrafficLight')
             # get position of car
             carx, cary, carz = sim.getObjectPosition(car, goal)
 
@@ -58,4 +60,17 @@ class Observation:
             velocity = sim.callScriptFunction('getSpeed', car_script)
             obs = Observation(carx,cary,carz,yaw,dx,dy,dt,velocity)
             vect = obs.get_vector()
+            if light == 'red':
+                vect.append(1)
+            else:
+                vect.append(0)
+            if light == 'yellow':
+                vect.append(1)
+            else:
+                vect.append(0)
+            if light == 'green':
+                vect.append(1)
+            else:
+                vect.append(0)
+            print(vect)
             return vect

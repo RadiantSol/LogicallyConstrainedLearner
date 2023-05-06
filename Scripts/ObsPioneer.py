@@ -44,6 +44,7 @@ class Observation:
     def get_observation(sim) -> list:
             car = sim.getObject('/PioneerP3DX')
             goal = sim.getObject('/Goal')
+            light = sim.getStringSignal('TrafficLight')
             # get position of car
             carx, cary, carz = sim.getObjectPosition(car, goal)
 
@@ -59,4 +60,16 @@ class Observation:
             linearVelocity, angularVelocity = sim.getObjectVelocity(car)
             obs = Observation(carx,cary,carz,yaw,dx,dy,dt,linearVelocity, angularVelocity)
             vect = obs.get_vector()
+            if light == 'red':
+                vect.append(1)
+            else:
+                vect.append(0)
+            if light == 'yellow':
+                vect.append(1)
+            else:
+                vect.append(0)
+            if light == 'green':
+                vect.append(1)
+            else:
+                vect.append(0)
             return vect
