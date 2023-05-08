@@ -14,7 +14,7 @@ def non_sync(sim):
     sim.setThreadAutomaticSwitch(False)
     light = 'red'
     
-    while sim.getThreadExitRequest():
+    while True:
         greenLight = random.choice([True, False])
         # green light condition
         if greenLight:
