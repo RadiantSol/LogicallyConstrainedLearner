@@ -40,6 +40,15 @@ class Observation:
             return True
         else:
             return False
+    
+    def check_red(sim) -> bool:
+        #check light here
+        #return True if RED, False else
+        return False
+    
+    def check_moving(sim) -> bool:
+        #return True if moving, False else
+        return True
 
     def get_observation(sim) -> list:
             car = sim.getObject('/PioneerP3DX')
