@@ -13,7 +13,6 @@ def non_sync(sim):
     # e.g. non-synchronized loop:
     sim.setThreadAutomaticSwitch(False)
     light = 'red'
-    changeLightColor(light, sim)
     
     while True:
         greenLight = random.choice([True, False])
@@ -29,11 +28,11 @@ def non_sync(sim):
                 light = 'yellow'
                 changeLightColor(light, sim)
                 sim.setStringSignal('TrafficLight', 'yellow')
-                sim.wait(2) # this could be a hyperparameter?
+                sim.wait(10) # this could be a hyperparameter?
                 light = 'red'
                 changeLightColor(light, sim)
         # wait 1 second before each light change evaluation
         sim.setStringSignal('TrafficLight', light)
-        sim.wait(1)
+        sim.wait(5)
 
 # See the user manual or the available code snippets for additional callback functions and details
