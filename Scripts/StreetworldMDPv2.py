@@ -68,12 +68,21 @@ class StreetWorld:
     def state_label(self, state):
         #check if in goal
         if Observation.check_goal(self.sim):
-            return ["goal"]
+            if Observation.check_red(self.sim):
+                return ["goal", "red"]
+            else:
+                return ["goal"]
         else:
             if Observation.check_off_map(self.sim):
                 return["off"]
             else:
-                return ["road"]
+                if Observation.check_red(self.sim):
+                    if Observation.check_moving(self.sim):
+                        return ["red","moving","road"]
+                    else:
+                        return ["red","road"]
+                else:
+                    return ["road"]
             
     def reset(self):
         self.sim.stopSimulation()
