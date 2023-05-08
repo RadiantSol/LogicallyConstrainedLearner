@@ -14,7 +14,7 @@ def non_sync(sim):
     sim.setThreadAutomaticSwitch(False)
     light = 'red'
     
-    while True:
+    while sim.getThreadExitRequest():
         greenLight = random.choice([True, False])
         # green light condition
         if greenLight:
@@ -33,6 +33,6 @@ def non_sync(sim):
                 changeLightColor(light, sim)
         # wait 1 second before each light change evaluation
         sim.setStringSignal('TrafficLight', light)
-        sim.wait(5)
+        sim.wait(20)
 
 # See the user manual or the available code snippets for additional callback functions and details
