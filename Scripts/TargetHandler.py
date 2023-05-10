@@ -2,8 +2,8 @@ def move_target(sim, action, car, target_handle):
         #get location of current robot
         #car = sim.getObject('/PioneerP3DX')
 
-        dx = 1/10
-        dy = 1/10
+        dx = 1
+        dy = 1
 
         #car absolute position
         carx, cary, carz = sim.getObjectPosition(car, sim.handle_world)
