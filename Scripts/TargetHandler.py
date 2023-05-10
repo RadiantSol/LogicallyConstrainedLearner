@@ -7,9 +7,8 @@ def move_target(sim, action, car, target_handle):
 
         #car absolute position
         carx, cary, carz = sim.getObjectPosition(car, sim.handle_world)
-
-        x = int(carx/dx)
-        y = int(cary/dy)
+        # x = int(carx/dx)
+        # y = int(cary/dy)
 
         #get target handle
         #target_handle = sim.getObject('/Target')

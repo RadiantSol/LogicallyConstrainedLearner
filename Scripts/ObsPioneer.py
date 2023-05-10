@@ -44,11 +44,16 @@ class Observation:
     def check_red(sim) -> bool:
         #check light here
         #return True if RED, False else
-        return False
+        return sim.getStringSignal('TrafficLight') == 'red'
     
     def check_moving(sim) -> bool:
         #return True if moving, False else
-        return True
+        linearVel, angularVel = sim.getObjectVelocity(sim.getObject('/PioneerP3DX'))
+        # if any of the velocities are not 0, then the pioneer is moving
+        for v1, v2 in zip(linearVel, angularVel):
+            if v1 != 0 or v2 != 0:
+                return True
+        return False
 
     def get_observation(sim) -> list:
             car = sim.getObject('/PioneerP3DX')
