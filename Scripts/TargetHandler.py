@@ -52,7 +52,7 @@ def move_target(sim, action, car, target_handle, client):
         startTime = sim.getSimulationTime()
         # wait for car to reach target
         # if it has been longer than about 20 seconds, target is unreachable and loop should end prematurely
-        while abs(x) > 0.1 and abs(y) > 0.1:
+        while abs(x) > 0.4 and abs(y) > 0.4:
             client.step()
             x, y, _ = sim.getObjectPosition(car, target_handle)
             if startTime + 20 < sim.getSimulationTime():

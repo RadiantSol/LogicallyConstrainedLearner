@@ -28,11 +28,11 @@ def non_sync(sim):
                 light = 'yellow'
                 changeLightColor(light, sim)
                 sim.setStringSignal('TrafficLight', 'yellow')
-                sim.wait(10) # this could be a hyperparameter?
+                sim.wait(20) # this could be a hyperparameter?
                 light = 'red'
                 changeLightColor(light, sim)
         # wait 1 second before each light change evaluation
         sim.setStringSignal('TrafficLight', light)
-        sim.wait(20)
+        sim.wait(50)
 
 # See the user manual or the available code snippets for additional callback functions and details
