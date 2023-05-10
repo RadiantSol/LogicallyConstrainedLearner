@@ -1,4 +1,4 @@
-def move_target(sim, action, car, target_handle):
+def move_target(sim, action, car, target_handle, client):
         #get location of current robot
         #car = sim.getObject('/PioneerP3DX')
 
@@ -7,6 +7,10 @@ def move_target(sim, action, car, target_handle):
 
         #car absolute position
         carx, cary, carz = sim.getObjectPosition(car, sim.handle_world)
+        # round coordinates to 0.1
+        carx = round(carx, 1)
+        cary = round(cary, 1)
+        carz = round(carz, 1)
         # x = int(carx/dx)
         # y = int(cary/dy)
 
@@ -42,4 +46,17 @@ def move_target(sim, action, car, target_handle):
         elif action == 8: #stay
             #0x, 0y
             sim.setObjectPosition(target_handle, sim.handle_world, [carx, cary, carz])
+
+        # get distance of car to target
+        x, y, _ = sim.getObjectPosition(car, target_handle)
+        startTime = sim.getSimulationTime()
+        # wait for car to reach target
+        # if it has been longer than about 20 seconds, target is unreachable and loop should end prematurely
+        while abs(x) > 0.1 and abs(y) > 0.1:
+            client.step()
+            x, y, _ = sim.getObjectPosition(car, target_handle)
+            if startTime + 20 < sim.getSimulationTime():
+                print("Movement time limit reached")
+                break
+        
             

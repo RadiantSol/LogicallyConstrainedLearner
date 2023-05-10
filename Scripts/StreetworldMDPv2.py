@@ -33,23 +33,23 @@ class StreetWorld:
         # process action
         target_handle = self.sim.getObject('/Target')
         if action == "north":
-            move_target(self.sim,0,self.car_handle,target_handle)
+            move_target(self.sim,0,self.car_handle,target_handle, self.client)
         elif action == 'north_east':
-            move_target(self.sim,1,self.car_handle,target_handle)
+            move_target(self.sim,1,self.car_handle,target_handle, self.client)
         elif action == 'east':
-            move_target(self.sim,2,self.car_handle,target_handle)
+            move_target(self.sim,2,self.car_handle,target_handle, self.client)
         elif action == 'south_east':
-            move_target(self.sim,3,self.car_handle,target_handle)
+            move_target(self.sim,3,self.car_handle,target_handle, self.client)
         elif action == 'south':
-            move_target(self.sim,4,self.car_handle,target_handle)
+            move_target(self.sim,4,self.car_handle,target_handle, self.client)
         elif action == 'south_west':
-            move_target(self.sim,5,self.car_handle,target_handle)
+            move_target(self.sim,5,self.car_handle,target_handle, self.client)
         elif action == 'west':
-            move_target(self.sim,6,self.car_handle,target_handle)
+            move_target(self.sim,6,self.car_handle,target_handle, self.client)
         elif action == 'north_west':
-            move_target(self.sim,7,self.car_handle,target_handle)
+            move_target(self.sim,7,self.car_handle,target_handle, self.client)
         elif action == 'stay':
-            move_target(self.sim,8,self.car_handle,target_handle)
+            move_target(self.sim,8,self.car_handle,target_handle, self.client)
         
         # execute action and take steps
         for _ in range(STEP_LENGTH):
