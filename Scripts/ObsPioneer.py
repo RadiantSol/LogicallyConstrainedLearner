@@ -40,6 +40,14 @@ class Observation:
             return True
         else:
             return False
+        
+        # potenial code for checking if the car has collided with the wall, AKA off-road
+        # need to change scene to have walls along entire boundary for this to work
+        # collision = sim.getStringSignal('Collision')
+        # if collision == 'true':
+        #     return True
+        # else:
+        #     return False
     
     def check_red(sim) -> bool:
         #check light here

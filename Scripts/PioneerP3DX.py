@@ -62,6 +62,7 @@ def non_sync(sim):
             if (res>0) and (dist<noDetectionDist):
                 if (dist<maxDetectionDist):
                     dist=maxDetectionDist
+                    sim.setStringSignal("Collision","true")
                 detect[i]=1-((dist-maxDetectionDist)/(noDetectionDist-maxDetectionDist))
             else:
                 detect[i]=0

@@ -91,6 +91,7 @@ class StreetWorld:
         self.sim.startSimulation()
         self.sim.setShapeColor(self.sim.getObject('/Light'), None, self.sim.colorcomponent_ambient, [1, 0, 0])
         self.sim.setStringSignal("TrafficLight", "red")
+        self.sim.setStringSignal("Collision", "false")
         if DISPLAY_DISABLED:
             self.sim.setBoolParam(self.sim.boolparam_display_enabled, False)
         self.client.step()
