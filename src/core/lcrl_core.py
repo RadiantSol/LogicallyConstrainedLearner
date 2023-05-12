@@ -276,7 +276,7 @@ class LCRL:
                 episode += 1
                 self.MDP.reset()
                 self.LDBA.reset()
-                current_state = self.MDP.current_state + [self.LDBA.automaton_state]
+                current_state = self.MDP.current_state.tolist() + [self.LDBA.automaton_state]
 
                 # check for epsilon-transitions at the current automaton state
                 if self.epsilon_transitions_exists:
@@ -315,7 +315,7 @@ class LCRL:
                         next_MDP_state = self.MDP.current_state.tolist()
                         next_automaton_state = self.LDBA.step(maxQ_action)
                     else:
-                        next_MDP_state = self.MDP.step(maxQ_action)
+                        next_MDP_state = self.MDP.step(maxQ_action).tolist()
                         next_automaton_state = self.LDBA.step(self.MDP.state_label(next_MDP_state))
 
                     # product MDP: synchronise the automaton with MDP
@@ -393,7 +393,9 @@ class LCRL:
                     np.random.shuffle(sars[model_key])
                 else:
                     sars[model_key] = high_reward_sars[model_key]
-
+            '''
+            DO TENSORBOARD HERE
+            '''
             for model_key in self.Q.keys():
                 self.Q[model_key].fit(
                     sars[model_key][:, 0:state_dimension + 1],  # stat - action

@@ -2,6 +2,7 @@ import math
 import time
 from Scripts.ObsPioneer import Observation
 from Scripts.TargetHandler import move_target
+import numpy as np
 from config import STEP_LENGTH, DISPLAY_DISABLED
 
 # MDP representation from LCRL
@@ -27,7 +28,7 @@ class StreetWorld:
         self.car_handle = self.sim.getObject('/PioneerP3DX')
         self.car_script = self.sim.getScript(self.sim.scripttype_childscript, self.car_handle)
         self.client.step()
-        self.current_state = []
+        self.current_state = np.array([])
     
     def step(self, action):
         # process action
@@ -58,13 +59,13 @@ class StreetWorld:
         # check for obstacles
 
         # update agent state
-        self.agent_state = Observation.get_observation(self.sim)
+        self.agent_state = np.array(Observation.get_observation(self.sim))
 
         # return the MDP state
         mdp_state = self.agent_state
         print(mdp_state)
         self.current_state = mdp_state
-        return [mdp_state]
+        return mdp_state
     
     def state_label(self, state):
         #check if in goal
@@ -95,5 +96,5 @@ class StreetWorld:
         if DISPLAY_DISABLED:
             self.sim.setBoolParam(self.sim.boolparam_display_enabled, False)
         self.client.step()
-        self.agent_state = Observation.get_observation(self.sim)
-        self.current_state = [self.agent_state]
+        self.agent_state = np.array(Observation.get_observation(self.sim))
+        self.current_state = self.agent_state
