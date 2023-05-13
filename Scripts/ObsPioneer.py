@@ -17,8 +17,8 @@ class Observation:
         vec.append(int(self.y / self.dy))
         vec.append(int(self.z ))
         vec.append(int(self.theta / self.dt))
-        for val in self.angularVelocity:
-            vec.append(int(val))
+        # for val in self.angularVelocity:
+        #     vec.append(int(val))
         for val in self.linearVelocity:
             vec.append(int(val))
         return vec
@@ -34,20 +34,21 @@ class Observation:
             return False
     
     def check_off_map(sim) -> bool:
-        car = sim.getObject('/PioneerP3DX')
-        x, y, _ = sim.getObjectPosition(car, sim.handle_world)
-        if y < -5 or y > 5 or x < -5 or x > 5:
-            return True
-        else:
-            return False
-        
-        # potenial code for checking if the car has collided with the wall, AKA off-road
-        # need to change scene to have walls along entire boundary for this to work
-        # collision = sim.getStringSignal('Collision')
-        # if collision == 'true':
+        # car = sim.getObject('/PioneerP3DX')
+        # x, y, _ = sim.getObjectPosition(car, sim.handle_world)
+        # if y < -5 or y > 5 or x < -5 or x > 5:
         #     return True
         # else:
         #     return False
+        
+        # potenial code for checking if the car has collided with the wall, AKA off-road
+        # need to change scene to have walls along entire boundary for this to work
+        collision = sim.getStringSignal('Collision')
+        if collision == 'true':
+            print("wall")
+            return True
+        else:
+            return False
     
     def check_red(sim) -> bool:
         #check light here
@@ -94,4 +95,5 @@ class Observation:
                 vect.append(1)
             else:
                 vect.append(0)
+            vect.append(sim.getSimulationTime())
             return vect

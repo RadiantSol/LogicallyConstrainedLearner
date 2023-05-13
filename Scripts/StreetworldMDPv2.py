@@ -52,9 +52,23 @@ class StreetWorld:
         elif action == 'stay':
             move_target(self.sim,8,self.car_handle,target_handle, self.client)
         
+        # x, y, _ = self.sim.getObjectPosition(self.car_handle, target_handle)
+        # startTime = self.sim.getSimulationTime()
+        # wait for car to reach target
+        # if it has been longer than about 20 seconds, target is unreachable and loop should end prematurely
+        # while (abs(x) > 0.25 and abs(y) > 0.25):
+        #     x, y, _ = self.sim.getObjectPosition(self.car_handle, target_handle)
+        #     if startTime + 20 < self.sim.getSimulationTime():
+        #         print("Movement time limit reached")
+        #         break
+        #     elif self.sim.getStringSignal("Collision") == "true":
+        #         print("Collision detected")
+        #         break
+        #     if abs(x) <= 0.25 and abs(y) <= 0.25:
+        #         print("Target reached")
         # execute action and take steps
-        for _ in range(STEP_LENGTH):
-            self.client.step()
+        # for _ in range(STEP_LENGTH):
+        #     self.client.step()
 
         # check for obstacles
 
@@ -63,7 +77,7 @@ class StreetWorld:
 
         # return the MDP state
         mdp_state = self.agent_state
-        print(mdp_state)
+        # print(mdp_state)
         self.current_state = mdp_state
         return mdp_state
     
@@ -88,7 +102,7 @@ class StreetWorld:
             
     def reset(self):
         self.sim.stopSimulation()
-        time.sleep(1)
+        time.sleep(0.5)
         self.sim.startSimulation()
         self.sim.setShapeColor(self.sim.getObject('/Light'), None, self.sim.colorcomponent_ambient, [1, 0, 0])
         self.sim.setStringSignal("TrafficLight", "red")

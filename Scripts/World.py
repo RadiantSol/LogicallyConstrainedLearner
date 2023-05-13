@@ -28,11 +28,15 @@ class World:
                 map[i][20] = '|'
                 map[i][25] = 'c'
                 map[i][30] = '|'
-                walls.append((i, 15))
-                walls.append((i, 35))
+                walls.append((i, 0))
+                walls.append((i, 49))
+                walls.append((i, 22))
+                walls.append((i, 32))
+                walls.append((0, i))
             map[49][25] = 'g'
             goal = (49, 25)
-            car = (0, 25)
+            car = (5, 25)
+            
         # straight line track, traffic light
         elif trackNo == 1:
             pass
@@ -44,7 +48,7 @@ class World:
         car = self.scaler.transform([car])
         self.placeGoal(goal[0])
         self.placeWalls(walls)
-        self.sim.setObjectPosition(self.sim.getObject('/Manta'), -1, [car[0][0], car[0][1], 1])
+        self.sim.setObjectPosition(self.sim.getObject('/PioneerP3DX'), -1, [car[0][0], car[0][1], 0.26])
 
     def placeWalls(self, obs):
         shapeHandles = []
@@ -54,6 +58,7 @@ class World:
             shapeHandles.append(shapeHandle)
         groupHandle=self.sim.groupShapes(shapeHandles, True)
         self.sim.setObjectAlias(groupHandle, 'Obstacle')
+        self.sim.setObjectInt32Param(groupHandle,self.sim.shapeintparam_respondable,0)
         
     def placeGoal(self, g):
         goal = self.sim.createPrimitiveShape(self.sim.primitiveshape_cuboid, [0.25, 0.25, 1])

@@ -32,17 +32,17 @@ def train(
     if algorithm == 'ql':
         learning_task.train_ql(episode_num, iteration_num_max)
         import dill
-        from src.environments.MarsRoverDA import MarsRover
+        # from src.environments.MarsRoverDA import MarsRover
     elif algorithm == 'nfq':
         learning_task.train_nfq(episode_num, iteration_num_max, nfq_replay_buffer_size)
         import dill
-        from src.environments.MarsRoverDA import MarsRover
+        # from src.environments.MarsRoverDA import MarsRover
     elif algorithm == 'ddpg':
         learning_task.train_ddpg(episode_num, iteration_num_max, ddpg_replay_buffer_size)
         import dill
         import tensorflow as tf
         tf.get_logger().setLevel('ERROR')
-        from src.environments.MarsRoverCA import MarsRover
+        # from src.environments.MarsRoverCA import MarsRover
     else:
         raise NotImplementedError('New learning algorithms will be added to LCRL soon. The selected algorithm is not '
                                   'implemented yet.')
@@ -167,98 +167,4 @@ def train(
                     learning_task.successes_in_test += 1
 
         print('success rate in testing: ' + str(100 * learning_task.successes_in_test / number_of_tests) + '%')
-
-    if isinstance(MDP, SlipperyGrid) and test:
-        # plt.plot(learning_task.path_length, c='royalblue')
-        # plt.xlabel('Episode Number')
-        # plt.ylabel('Agent Traversed Distance from The Initial State')
-        # plt.grid(True)
-        # if average_window > 0:
-        #     avg = np.convolve(learning_task.path_length, np.ones((average_window,)) / average_window, mode='valid')
-        #     plt.plot(avg, c='darkblue')
-        # plt.savefig(os.path.join(results_sub_path, 'traversed distance in the grid.png'))
-        # plt.show()
-
-        distinct_labels = np.unique(learning_task.MDP.labels)
-        labels_dic = {}
-        label_indx = 0
-        bounds = [-0.9]
-        cmap = plt.get_cmap('gist_rainbow')
-        for label in distinct_labels:
-            labels_dic[label] = label_indx
-            bounds.append(bounds[-1] + 1)
-            label_indx += 1
-        color_map = cmap(np.linspace(0, 1, len(distinct_labels)))
-        cmap = colors.ListedColormap(color_map)
-        norm = colors.BoundaryNorm(bounds, cmap.N)
-        labels_value = np.zeros([learning_task.MDP.shape[0], learning_task.MDP.shape[1]])
-        for i in range(learning_task.MDP.shape[0]):
-            for j in range(learning_task.MDP.shape[1]):
-                labels_value[i][j] = labels_dic[learning_task.MDP.state_label([i, j])]
-        patches = [mpatches.Patch(color=color_map[i], label=list(distinct_labels)[i]) for i in
-                   range(len(distinct_labels))]
-        plt.imshow(labels_value, interpolation='nearest', cmap=cmap, norm=norm)
-        plt.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-        path_x, path_y = np.array(test_path).T
-        plt.scatter(path_y, path_x, c='lime', edgecolors='teal')
-        plt.scatter(path_y[0], path_x[0], c='red', edgecolors='black')
-        plt.annotate('s_0', (path_y[0], path_x[0]), fontsize=15, xytext=(20, 20), textcoords="offset points",
-                     va="center", ha="left",
-                     bbox=dict(boxstyle="round", fc="w"),
-                     arrowprops=dict(arrowstyle="->"))
-        plt.title('This policy is synthesised by the trained agent')
-        plt.savefig(
-            os.path.join(results_sub_path, 'tested_policy.png'), bbox_inches="tight")
-        plt.show()
-        is_gif = input(
-            'Would you like to create a gif for the the control policy? '
-            'If so, type in "y", otherwise, type in "n". ')
-        if is_gif == 'y' or is_gif == 'Y':
-            animate(learning_task.MDP, test_path, results_sub_path, labels_value, cmap, norm, patches)
-        print('\n---------------------------------\n')
-        print('The results have been saved here:\n')
-        print(results_sub_path)
-        return learning_task
-
-    if isinstance(MDP, MarsRover) and test:
-        plt.imshow(MDP.background)
-        path_x, path_y = np.array(test_path).T
-        plt.scatter(path_y, path_x, c='lime', edgecolors='teal')
-        plt.scatter(path_y[0], path_x[0], c='red', edgecolors='black')
-        plt.annotate('s_0', (path_y[0], path_x[0]), fontsize=15, xytext=(20, 20), textcoords="offset points",
-                     va="center", ha="left",
-                     bbox=dict(boxstyle="round", fc="w"),
-                     arrowprops=dict(arrowstyle="->"))
-        plt.title('This policy is synthesised by the trained agent')
-        plt.savefig(
-            os.path.join(results_sub_path, 'tested_policy.png'), bbox_inches="tight")
-        plt.show()
-        is_gif = input(
-            'Would you like to create a gif for the the control policy? '
-            'If so, type in "y", otherwise, type in "n". ')
-        if is_gif == 'y' or is_gif == 'Y':
-            animate(learning_task.MDP, test_path, results_sub_path, labels_value, cmap, norm, patches)
-        print('\n---------------------------------\n')
-        print('The results have been saved here:\n')
-        print(results_sub_path)
-        return learning_task
-
-    if algorithm == 'ql':
-        with open(os.path.join(results_sub_path, 'learned_model.pkl'), 'wb') as learning_file:
-            dill.dump(learning_task, learning_file)
-        if test:
-            with open(os.path.join(results_sub_path, 'test_results.pkl'), 'wb') as test_file:
-                dill.dump(test_path, test_file)
-        print('In order to load the learning results use the following command in Python console:')
-        print('import dill')
-        print("learned_model = dill.load(open('" + os.path.join(results_sub_path, 'learned_model.pkl') + "', 'rb'))")
-        if test:
-            print("tested_trace = dill.load(open('" + os.path.join(results_sub_path, 'test_results.pkl') + "', 'rb'))")
-        print('\n---------------------------------\n')
-        if learning_task.early_interruption == 0:
-            print("Training finished successfully!")
-        else:
-            print("Training results have been saved successfully! [Note: training was interrupted by user]")
-        return learning_task
-    # TODO: change the save method and add nfq & ddpg
     return learning_task

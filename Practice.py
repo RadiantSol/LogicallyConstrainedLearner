@@ -19,6 +19,7 @@ task = train(MDP, LDBA,
                      iteration_num_max=ITERATIONS,
                      discount_factor=DISCOUNT,
                      learning_rate=LEARNING_RATE,
+                     nfq_replay_buffer_size=100000,
                      )
 
 print(task)

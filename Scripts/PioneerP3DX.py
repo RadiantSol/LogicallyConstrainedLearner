@@ -30,7 +30,7 @@ def non_sync(sim):
         usensors[i]=sim.getObject("./ultrasonicSensor["+str(i)+"]")
         sim.setObjectInt32Param(usensors[i],sim.proxintparam_entity_to_detect,obstacles)
     noDetectionDist=0.5
-    maxDetectionDist=0.3
+    maxDetectionDist=0.1
     detect=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     braitenbergL=[-0.2,-0.4,-0.6,-0.8,-1,-1.2,-1.4,-1.6, 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
     braitenbergR=[-1.6,-1.4,-1.2,-1,-0.8,-0.6,-0.4,-0.2, 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
@@ -59,6 +59,7 @@ def non_sync(sim):
         #avoid dynamic obstacles
         for i in range(16):
             res,dist,_,_,_=sim.readProximitySensor(usensors[i])
+            print(res, dist)
             if (res>0) and (dist<noDetectionDist):
                 if (dist<maxDetectionDist):
                     dist=maxDetectionDist
@@ -66,9 +67,9 @@ def non_sync(sim):
                 detect[i]=1-((dist-maxDetectionDist)/(noDetectionDist-maxDetectionDist))
             else:
                 detect[i]=0
-        for i in range(16):
-            vL=vL+braitenbergL[i]*detect[i]
-            vR=vR+braitenbergR[i]*detect[i]
+        # for i in range(16):
+        #     vL=vL+braitenbergL[i]*detect[i]
+        #     vR=vR+braitenbergR[i]*detect[i]
         
         sim.wait(1)
         sim.setJointTargetVelocity(motorLeft, vL)

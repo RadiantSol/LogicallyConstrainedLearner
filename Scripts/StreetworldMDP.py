@@ -55,6 +55,8 @@ class StreetWorld:
             self.sim.callScriptFunction('controlVehicle', self.manta_script, 1, 4)
         elif action == 'decelerate4':
             self.sim.callScriptFunction('controlVehicle', self.manta_script, 0, 4)
+
+        
         
         # execute action and take steps
         for _ in range(STEP_LENGTH):
