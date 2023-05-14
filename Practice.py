@@ -1,6 +1,6 @@
 # import LCRL code trainer module
 from src.train import train
-from Scripts.StreetworldLDBA import StreetworldLDBA
+from Scripts.StreetworldLDBAv2 import StreetworldLDBA
 from zmqRemoteApi import RemoteAPIClient
 from Scripts.StreetworldMDPv2 import StreetWorld
 from config import *

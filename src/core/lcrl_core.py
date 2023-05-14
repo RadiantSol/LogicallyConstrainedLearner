@@ -683,7 +683,7 @@ class LCRL:
 
                     # get an action from the actor
                     active_model = self.LDBA.automaton_state
-
+        
                     tf_prev_state = tf.expand_dims(tf.convert_to_tensor(prev_state), 0)
 
                     action = policy(tf_prev_state, ou_noise)
@@ -756,7 +756,7 @@ class LCRL:
                     if next_automaton_state == -1:
                         break
                     if reward_flag > 0.5:
-                        # print('reward reached!')
+                        print('reward reached!')
                         self.LDBA.reset()
 
                     prev_state = state

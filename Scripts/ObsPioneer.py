@@ -13,14 +13,14 @@ class Observation:
 
     def get_vector(self) -> list:
         vec = list()
-        vec.append(int(self.x / self.dx))
-        vec.append(int(self.y / self.dy))
-        vec.append(int(self.z ))
-        vec.append(int(self.theta / self.dt))
+        vec.append(self.x)
+        vec.append(self.y)
+        vec.append(self.z )
+        vec.append(self.theta)
         # for val in self.angularVelocity:
         #     vec.append(int(val))
         for val in self.linearVelocity:
-            vec.append(int(val))
+            vec.append(val)
         return vec
 
     def check_goal(sim) -> bool:
@@ -95,5 +95,5 @@ class Observation:
                 vect.append(1)
             else:
                 vect.append(0)
-            vect.append(sim.getSimulationTime())
+            
             return vect
